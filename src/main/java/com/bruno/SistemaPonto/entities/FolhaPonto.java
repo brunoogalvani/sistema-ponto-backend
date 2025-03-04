@@ -2,6 +2,8 @@ package com.bruno.SistemaPonto.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "tb_pontos")
 public class FolhaPonto {
@@ -86,5 +88,18 @@ public class FolhaPonto {
 
     public void setSaidaTarde(String saidaTarde) {
         this.saidaTarde = saidaTarde;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FolhaPonto that = (FolhaPonto) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
