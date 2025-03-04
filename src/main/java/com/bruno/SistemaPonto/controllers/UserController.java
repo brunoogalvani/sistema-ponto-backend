@@ -3,10 +3,7 @@ package com.bruno.SistemaPonto.controllers;
 import com.bruno.SistemaPonto.entities.User;
 import com.bruno.SistemaPonto.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -15,8 +12,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping
-    public User createUser(@RequestBody User user){
+    @PostMapping("/{name}/{login}/{password}")
+    public User createUser(@PathVariable String name, @PathVariable String login, @PathVariable String password){
+        User user = new User(name, login, password);
         return userRepository.save(user);
     }
 }

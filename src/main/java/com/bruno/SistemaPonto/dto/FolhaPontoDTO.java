@@ -4,16 +4,15 @@ import com.bruno.SistemaPonto.entities.FolhaPonto;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class FolhaPontoDTO {
 
     private Long id;
-    private LocalDate data;
-    private LocalTime entradaManha;
-    private LocalTime saidaManha;
-    private LocalTime entradaTarde;
-    private LocalTime saidaTarde;
+    private LocalDate dia;
+    private String entradaManha;
+    private String saidaManha;
+    private String entradaTarde;
+    private String saidaTarde;
 
     public FolhaPontoDTO() {
     }
@@ -30,43 +29,43 @@ public class FolhaPontoDTO {
         this.id = id;
     }
 
-    public LocalDate getData() {
-        return data;
+    public LocalDate getDia() {
+        return dia;
     }
 
-    public void setData(LocalDate data) {
-        this.data = data;
+    public void setDia(LocalDate dia) {
+        this.dia = dia;
     }
 
-    public LocalTime getEntradaManha() {
+    public String getEntradaManha() {
         return entradaManha;
     }
 
-    public void setEntradaManha(LocalTime entradaManha) {
+    public void setEntradaManha(String entradaManha) {
         this.entradaManha = entradaManha;
     }
 
-    public LocalTime getSaidaManha() {
+    public String getSaidaManha() {
         return saidaManha;
     }
 
-    public void setSaidaManha(LocalTime saidaManha) {
+    public void setSaidaManha(String saidaManha) {
         this.saidaManha = saidaManha;
     }
 
-    public LocalTime getEntradaTarde() {
+    public String getEntradaTarde() {
         return entradaTarde;
     }
 
-    public void setEntradaTarde(LocalTime entradaTarde) {
+    public void setEntradaTarde(String entradaTarde) {
         this.entradaTarde = entradaTarde;
     }
 
-    public LocalTime getSaidaTarde() {
+    public String getSaidaTarde() {
         return saidaTarde;
     }
 
-    public void setSaidaTarde(LocalTime saidaTarde) {
+    public void setSaidaTarde(String saidaTarde) {
         this.saidaTarde = saidaTarde;
     }
 }
