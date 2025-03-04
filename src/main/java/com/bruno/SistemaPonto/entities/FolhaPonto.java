@@ -2,15 +2,13 @@ package com.bruno.SistemaPonto.entities;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-
 @Entity
 @Table(name = "tb_pontos")
 public class FolhaPonto {
 
     @Id
     private Long id;
-    private LocalDate dia;
+    private String dia;
     private String entradaManha;
     private String saidaManha;
     private String entradaTarde;
@@ -19,7 +17,7 @@ public class FolhaPonto {
     public FolhaPonto() {
     }
 
-    public FolhaPonto(Long id, LocalDate dia, String entradaManha, String saidaManha, String entradaTarde, String saidaTarde) {
+    public FolhaPonto(Long id, String dia, String entradaManha, String saidaManha, String entradaTarde, String saidaTarde) {
         this.id = id;
         this.dia = dia;
         this.entradaManha = entradaManha;
@@ -36,11 +34,11 @@ public class FolhaPonto {
         this.id = id;
     }
 
-    public LocalDate getDia() {
+    public String getDia() {
         return dia;
     }
 
-    public void setDia(LocalDate dia) {
+    public void setDia(String dia) {
         this.dia = dia;
     }
 

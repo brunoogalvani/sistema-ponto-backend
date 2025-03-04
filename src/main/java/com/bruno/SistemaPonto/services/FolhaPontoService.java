@@ -1,6 +1,7 @@
 package com.bruno.SistemaPonto.services;
 
 import com.bruno.SistemaPonto.dto.FolhaPontoDTO;
+import com.bruno.SistemaPonto.entities.FolhaPonto;
 import com.bruno.SistemaPonto.repositories.FolhaPontoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,13 @@ public class FolhaPontoService {
     private FolhaPontoRepository folhaPontoRepository;
 
     public FolhaPontoDTO baterPonto(Long id){
-        LocalDate hoje = LocalDate.now();
-        Optional<FolhaPontoDTO> registroOpt = folhaPontoRepository.findByIdAndDia(id, hoje);
+        String dia = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        Optional<FolhaPonto> registroOpt = folhaPontoRepository.findByIdAndDia(id, dia);
 
-        FolhaPontoDTO registro = registroOpt.orElseGet(() -> {
-           FolhaPontoDTO novoPonto = new FolhaPontoDTO();
+        FolhaPonto registro = registroOpt.orElseGet(() -> {
+           FolhaPonto novoPonto = new FolhaPonto();
            novoPonto.setId(id);
-           novoPonto.setDia(hoje);
+           novoPonto.setDia(dia);
            return novoPonto;
         });
 
@@ -41,6 +42,8 @@ public class FolhaPontoService {
             throw new IllegalStateException("Todas as marcações já foram feitas para hoje.");
         }
 
-        return folhaPontoRepository.save(registro);
+        folhaPontoRepository.save(registro);
+
+        return new FolhaPontoDTO(registro);
     }
 }

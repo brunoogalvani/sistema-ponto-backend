@@ -3,12 +3,10 @@ package com.bruno.SistemaPonto.dto;
 import com.bruno.SistemaPonto.entities.FolhaPonto;
 import org.springframework.beans.BeanUtils;
 
-import java.time.LocalDate;
-
 public class FolhaPontoDTO {
 
     private Long id;
-    private LocalDate dia;
+    private String dia;
     private String entradaManha;
     private String saidaManha;
     private String entradaTarde;
@@ -29,11 +27,11 @@ public class FolhaPontoDTO {
         this.id = id;
     }
 
-    public LocalDate getDia() {
+    public String getDia() {
         return dia;
     }
 
-    public void setDia(LocalDate dia) {
+    public void setDia(String dia) {
         this.dia = dia;
     }
 
