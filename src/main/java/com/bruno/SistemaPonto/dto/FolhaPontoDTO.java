@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 public class FolhaPontoDTO {
 
     private Long id;
+    private Long userId;
     private String dia;
     private String entradaManha;
     private String saidaManha;
@@ -17,6 +18,7 @@ public class FolhaPontoDTO {
 
     public FolhaPontoDTO(FolhaPonto entity){
         BeanUtils.copyProperties(entity, this);
+        this.userId = entity.getUser().getId();
     }
 
     public Long getId() {
@@ -25,6 +27,14 @@ public class FolhaPontoDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getDia() {

@@ -2,7 +2,9 @@ package com.bruno.SistemaPonto.services;
 
 import com.bruno.SistemaPonto.dto.FolhaPontoDTO;
 import com.bruno.SistemaPonto.entities.FolhaPonto;
+import com.bruno.SistemaPonto.entities.User;
 import com.bruno.SistemaPonto.repositories.FolhaPontoRepository;
+import com.bruno.SistemaPonto.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +19,18 @@ public class FolhaPontoService {
     @Autowired
     private FolhaPontoRepository folhaPontoRepository;
 
-    public FolhaPontoDTO baterPonto(Long id){
+    @Autowired
+    private UserRepository userRepository;
+
+    public FolhaPontoDTO baterPonto(Long userId){
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não Encontrado"));
+
         String dia = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        Optional<FolhaPonto> registroOpt = folhaPontoRepository.findByIdAndDia(id, dia);
+        Optional<FolhaPonto> registroOpt = folhaPontoRepository.findByUserIdAndDia(user.getId(), dia);
 
         FolhaPonto registro = registroOpt.orElseGet(() -> {
            FolhaPonto novoPonto = new FolhaPonto();
-           novoPonto.setId(id);
+           novoPonto.setUser(user);
            novoPonto.setDia(dia);
            return novoPonto;
         });

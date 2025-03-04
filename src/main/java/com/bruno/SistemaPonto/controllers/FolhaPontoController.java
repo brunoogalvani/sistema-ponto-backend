@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/pontos")
 public class FolhaPontoController {
@@ -18,17 +20,21 @@ public class FolhaPontoController {
     @Autowired
     private FolhaPontoService folhaPontoService;
 
-    @PostMapping("/bater/{id}")
-    public ResponseEntity<FolhaPontoDTO> baterPonto(@PathVariable Long id) {
-        FolhaPontoDTO folhaPonto = folhaPontoService.baterPonto(id);
+    @PostMapping("/bater/{userId}")
+    public ResponseEntity<FolhaPontoDTO> baterPonto(@PathVariable Long userId) {
+        FolhaPontoDTO folhaPonto = folhaPontoService.baterPonto(userId);
         return ResponseEntity.ok(folhaPonto);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<FolhaPontoDTO> getPontoById(@PathVariable Long id) {
-        FolhaPonto folhaPonto = folhaPontoRepository.findById(id).orElseThrow(() -> new RuntimeException("Folha Ponto não Encontrada"));
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<FolhaPontoDTO>> getPontoById(@PathVariable Long userId) {
+        List<FolhaPonto> pontos = folhaPontoRepository.findByUserId(userId);
 
-        FolhaPontoDTO dto = new FolhaPontoDTO(folhaPonto);
-        return ResponseEntity.ok(dto);
+        if (pontos.isEmpty()) {
+            throw new RuntimeException("Nenhum registro de ponto deste usuário foi encontrado");
+        }
+
+        List<FolhaPontoDTO> dtos = pontos.stream().map(FolhaPontoDTO::new).toList();
+        return ResponseEntity.ok(dtos);
     }
 }

@@ -7,7 +7,13 @@ import jakarta.persistence.*;
 public class FolhaPonto {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     private String dia;
     private String entradaManha;
     private String saidaManha;
@@ -32,6 +38,14 @@ public class FolhaPonto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getDia() {

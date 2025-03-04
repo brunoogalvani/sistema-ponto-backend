@@ -2,6 +2,9 @@ package com.bruno.SistemaPonto.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tb_users")
 public class User {
@@ -12,6 +15,9 @@ public class User {
     private String name;
     private String login;
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FolhaPonto> pontos = new ArrayList<>();
 
     public User() {
     }
