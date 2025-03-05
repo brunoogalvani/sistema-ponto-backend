@@ -2,6 +2,7 @@ package com.bruno.SistemaPonto.controllers;
 
 import com.bruno.SistemaPonto.dto.AuthDTO;
 import com.bruno.SistemaPonto.entities.User;
+import com.bruno.SistemaPonto.entities.UserRole;
 import com.bruno.SistemaPonto.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,14 +42,17 @@ public class AuthController {
         }
 
         Long userId = null;
+        UserRole role = null;
         if (userDetails instanceof User) {
             userId = ((User) userDetails).getId();
+            role = ((User) userDetails).getRole();
         }
 
         if (userId == null) return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ID do usuário não encontrado");
 
         Map<String, Object> response = new HashMap<>();
         response.put("id", userId);
+        response.put("role", role);
 
         return ResponseEntity.ok(response);
     }
