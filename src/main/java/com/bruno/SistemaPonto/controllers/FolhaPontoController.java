@@ -37,4 +37,9 @@ public class FolhaPontoController {
         List<FolhaPontoDTO> dtos = pontos.stream().map(FolhaPontoDTO::new).toList();
         return ResponseEntity.ok(dtos);
     }
+
+    @GetMapping("/{userId}/{dia}")
+    public FolhaPonto getPontoByDay(@PathVariable Long userId, @PathVariable String dia){
+        return folhaPontoRepository.findByUserIdAndDia(userId, dia).orElseThrow(() -> new RuntimeException("Folha Ponto não Encontrada neste dia"));
+    }
 }
