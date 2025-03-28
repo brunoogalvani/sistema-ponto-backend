@@ -2,6 +2,9 @@ package com.bruno.SistemaPonto.entities;
 
 import jakarta.persistence.*;
 
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Entity
@@ -21,6 +24,7 @@ public class FolhaPonto {
     private String saidaManha;
     private String entradaTarde;
     private String saidaTarde;
+    private String totalHoras;
 
     public FolhaPonto() {
     }
@@ -32,6 +36,7 @@ public class FolhaPonto {
         this.saidaManha = saidaManha;
         this.entradaTarde = entradaTarde;
         this.saidaTarde = saidaTarde;
+        this.totalHoras = "--:--";
     }
 
     public Long getId() {
@@ -88,6 +93,35 @@ public class FolhaPonto {
 
     public void setSaidaTarde(String saidaTarde) {
         this.saidaTarde = saidaTarde;
+    }
+
+    public String getTotalHoras() {
+        return totalHoras;
+    }
+
+    public void atualizarTotalHoras() {
+        this.totalHoras = calcularTotalHoras();
+    }
+
+    public String calcularTotalHoras() {
+        try {
+            if (entradaManha == null || saidaManha == null || entradaTarde == null || saidaTarde == null) return "--:--";
+
+            int minutosTrabalhados = calcularDiferencaMinutos(entradaManha, saidaManha) + calcularDiferencaMinutos(entradaTarde, saidaTarde);
+            int horas = minutosTrabalhados / 60;
+            int minutos = minutosTrabalhados % 60;
+
+            return String.format("%02d:%02d", horas, minutos);
+        } catch (Exception e) {
+            return "--:--";
+        }
+    }
+
+    private int calcularDiferencaMinutos(String inicio, String fim) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime horaInicio = LocalTime.parse(inicio, formatter);
+        LocalTime horaFim = LocalTime.parse(fim, formatter);
+        return (int) Duration.between(horaInicio, horaFim).toMinutes();
     }
 
     @Override

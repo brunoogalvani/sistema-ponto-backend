@@ -2,6 +2,7 @@ package com.bruno.SistemaPonto.dto;
 
 import com.bruno.SistemaPonto.entities.FolhaPonto;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class FolhaPontoDTO {
 
@@ -12,12 +13,15 @@ public class FolhaPontoDTO {
     private String saidaManha;
     private String entradaTarde;
     private String saidaTarde;
+    private String totalHoras;
 
     public FolhaPontoDTO() {
     }
 
     public FolhaPontoDTO(FolhaPonto entity){
+        entity.atualizarTotalHoras();
         BeanUtils.copyProperties(entity, this);
+        this.totalHoras = entity.getTotalHoras();
         this.userId = entity.getUser().getId();
     }
 
@@ -75,5 +79,9 @@ public class FolhaPontoDTO {
 
     public void setSaidaTarde(String saidaTarde) {
         this.saidaTarde = saidaTarde;
+    }
+
+    public String getTotalHoras() {
+        return totalHoras;
     }
 }

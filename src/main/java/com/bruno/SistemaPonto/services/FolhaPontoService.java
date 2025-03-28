@@ -49,6 +49,8 @@ public class FolhaPontoService {
             throw new IllegalStateException("Todas as marcações já foram feitas para hoje.");
         }
 
+        registro.atualizarTotalHoras();
+
         folhaPontoRepository.save(registro);
 
         return new FolhaPontoDTO(registro);
