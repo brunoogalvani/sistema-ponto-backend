@@ -18,7 +18,6 @@ public class UserService {
     public List<UserDTO> findAll() {
         List<User> result = userRepository.findAll();
         return result.stream()
-                .filter(user -> user.getRole() == UserRole.USER)
                 .map(UserDTO::new)
                 .toList();
     }
