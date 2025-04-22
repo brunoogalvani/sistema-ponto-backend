@@ -2,7 +2,6 @@ package com.bruno.SistemaPonto.services;
 
 import com.bruno.SistemaPonto.dto.UserDTO;
 import com.bruno.SistemaPonto.entities.User;
-import com.bruno.SistemaPonto.entities.UserRole;
 import com.bruno.SistemaPonto.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private String name;
 
     @Column(unique = true)
-    private String login;
+    private String email;
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -32,9 +32,9 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String login, String password, UserRole role) {
+    public User(String name, String email, String password, UserRole role) {
         this.name = name;
-        this.login = login;
+        this.email = email;
         this.password = password;
         this.role = role;
     }
@@ -55,12 +55,12 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -87,7 +87,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return email;
     }
 
     @Override

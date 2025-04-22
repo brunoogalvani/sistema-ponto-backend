@@ -1,4 +1,4 @@
 package com.bruno.SistemaPonto.dto;
 
-public record AuthDTO(String login, String password) {
+public record AuthDTO(String email, String password) {
 }

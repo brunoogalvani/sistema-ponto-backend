@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -30,12 +29,12 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthDTO data) {
 
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = authenticationManager.authenticate(usernamePassword);
 
-        String login = auth.getName();
+        String email = auth.getName();
 
-        UserDetails userDetails = userRepository.findByLogin(login);
+        UserDetails userDetails = userRepository.findByEmail(email);
 
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não encontrado");

@@ -1,6 +1,5 @@
 package com.bruno.SistemaPonto.dto;
 
-import com.bruno.SistemaPonto.entities.FolhaPonto;
 import com.bruno.SistemaPonto.entities.User;
 import com.bruno.SistemaPonto.entities.UserRole;
 import org.springframework.beans.BeanUtils;
@@ -9,7 +8,7 @@ public class UserDTO {
 
     private Long id;
     private String name;
-    private String login;
+    private String email;
     private String password;
     private UserRole role;
 
@@ -36,12 +35,12 @@ public class UserDTO {
         this.name = name;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
