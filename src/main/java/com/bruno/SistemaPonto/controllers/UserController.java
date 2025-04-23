@@ -1,5 +1,6 @@
 package com.bruno.SistemaPonto.controllers;
 
+import com.bruno.SistemaPonto.dto.EditUserDTO;
 import com.bruno.SistemaPonto.dto.RegisterDTO;
 import com.bruno.SistemaPonto.dto.UserDTO;
 import com.bruno.SistemaPonto.entities.User;
@@ -35,6 +36,31 @@ public class UserController {
         Optional<User> user = userRepository.findById(id);
         return user.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody EditUserDTO dto) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) return ResponseEntity.notFound().build();
+
+        User user = optionalUser.get();
+
+        if (dto.getName() != null && !dto.getName().isBlank()) {
+            user.setName(dto.getName());
+        }
+
+        if (dto.getEmail() != null && !dto.getEmail().isBlank()) {
+            user.setEmail(dto.getEmail());
+        }
+
+        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            String encryptedPassword = new BCryptPasswordEncoder().encode(dto.getPassword());
+            user.setPassword(encryptedPassword);
+        }
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Usuário atualizado com sucesso");
     }
 
     @PostMapping("/register")
