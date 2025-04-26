@@ -63,6 +63,17 @@ public class UserController {
         return ResponseEntity.ok("Usuário atualizado com sucesso");
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteUser(@PathVariable Long id) {
+        boolean deleted = userService.deleteUser(id);
+
+        if (deleted) {
+            return ResponseEntity.ok("Usuário deletado com sucesso");
+        }
+        
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
         if (this.userRepository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();

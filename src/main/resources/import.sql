@@ -1,1 +1,1 @@
-INSERT INTO tb_users (name, email, password, role) VALUES ('admin', 'admin', '$2a$10$7qcVRfikjCaru3qKjCY.8.KM7yLz0TjMBkgq4NC03PevKUBdccF9C', 'ADMIN');
+INSERT INTO tb_users (name, email, password, role) VALUES ('admin', 'admin@gmail.com', '$2a$10$7qcVRfikjCaru3qKjCY.8.KM7yLz0TjMBkgq4NC03PevKUBdccF9C', 'ADMIN');

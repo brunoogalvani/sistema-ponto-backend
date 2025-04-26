@@ -20,4 +20,13 @@ public class UserService {
                 .map(UserDTO::new)
                 .toList();
     }
+
+    public boolean deleteUser(Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+
+        return false;
+    }
 }
