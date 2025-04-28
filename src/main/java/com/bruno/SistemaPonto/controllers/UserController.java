@@ -8,6 +8,7 @@ import com.bruno.SistemaPonto.repositories.UserRepository;
 import com.bruno.SistemaPonto.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -82,6 +83,6 @@ public class UserController {
         User newUser = new User(data.name(), data.email(), encryptedPassword, data.role());
 
         this.userRepository.save(newUser);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
