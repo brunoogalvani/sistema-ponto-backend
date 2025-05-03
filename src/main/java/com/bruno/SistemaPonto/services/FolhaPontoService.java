@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class FolhaPontoService {
@@ -22,7 +23,7 @@ public class FolhaPontoService {
     @Autowired
     private UserRepository userRepository;
 
-    public FolhaPontoDTO baterPonto(Long userId){
+    public FolhaPontoDTO baterPonto(UUID userId){
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não Encontrado"));
 
         String dia = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));

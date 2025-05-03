@@ -6,14 +6,15 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_pontos")
 public class FolhaPonto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -29,7 +30,7 @@ public class FolhaPonto {
     public FolhaPonto() {
     }
 
-    public FolhaPonto(Long id, String dia, String entradaManha, String saidaManha, String entradaTarde, String saidaTarde) {
+    public FolhaPonto(UUID id, String dia, String entradaManha, String saidaManha, String entradaTarde, String saidaTarde) {
         this.id = id;
         this.dia = dia;
         this.entradaManha = entradaManha;
@@ -39,11 +40,11 @@ public class FolhaPonto {
         this.totalHoras = "--:--";
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

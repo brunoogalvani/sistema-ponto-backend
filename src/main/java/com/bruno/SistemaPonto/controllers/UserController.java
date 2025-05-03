@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -33,14 +34,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getUserById(@PathVariable Long id) {
+    public ResponseEntity getUserById(@PathVariable UUID id) {
         Optional<User> user = userRepository.findById(id);
         return user.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody EditUserDTO dto) {
+    public ResponseEntity<String> updateUser(@PathVariable UUID id, @RequestBody EditUserDTO dto) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) return ResponseEntity.notFound().build();
 
@@ -65,7 +66,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(@PathVariable Long id) {
+    public ResponseEntity deleteUser(@PathVariable UUID id) {
         boolean deleted = userService.deleteUser(id);
 
         if (deleted) {

@@ -4,9 +4,11 @@ import com.bruno.SistemaPonto.entities.User;
 import com.bruno.SistemaPonto.entities.UserRole;
 import org.springframework.beans.BeanUtils;
 
+import java.util.UUID;
+
 public class UserDTO {
 
-    private Long id;
+    private UUID id;
     private String name;
     private String email;
     private String password;
@@ -19,11 +21,11 @@ public class UserDTO {
         BeanUtils.copyProperties(entity, this);
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

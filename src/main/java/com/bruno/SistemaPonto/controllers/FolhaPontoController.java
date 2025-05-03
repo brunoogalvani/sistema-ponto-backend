@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/pontos")
@@ -21,13 +22,13 @@ public class FolhaPontoController {
     private FolhaPontoService folhaPontoService;
 
     @PostMapping("/bater/{userId}")
-    public ResponseEntity<FolhaPontoDTO> baterPonto(@PathVariable Long userId) {
+    public ResponseEntity<FolhaPontoDTO> baterPonto(@PathVariable UUID userId) {
         FolhaPontoDTO folhaPonto = folhaPontoService.baterPonto(userId);
         return ResponseEntity.ok(folhaPonto);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<FolhaPontoDTO>> getPontoById(@PathVariable Long userId) {
+    public ResponseEntity<List<FolhaPontoDTO>> getPontoById(@PathVariable UUID userId) {
         List<FolhaPonto> pontos = folhaPontoRepository.findByUserId(userId);
 
         if (pontos.isEmpty()) {
@@ -39,7 +40,7 @@ public class FolhaPontoController {
     }
 
     @GetMapping("/{userId}/{dia}")
-    public FolhaPonto getPontoByDay(@PathVariable Long userId, @PathVariable String dia){
+    public FolhaPonto getPontoByDay(@PathVariable UUID userId, @PathVariable String dia){
         return folhaPontoRepository.findByUserIdAndDia(userId, dia).orElseThrow(() -> new RuntimeException("Folha Ponto não Encontrada neste dia"));
     }
 }

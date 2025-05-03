@@ -2,12 +2,13 @@ package com.bruno.SistemaPonto.dto;
 
 import com.bruno.SistemaPonto.entities.FolhaPonto;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.UUID;
 
 public class FolhaPontoDTO {
 
     private Long id;
-    private Long userId;
+    private UUID userId;
     private String dia;
     private String entradaManha;
     private String saidaManha;
@@ -33,11 +34,11 @@ public class FolhaPontoDTO {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 

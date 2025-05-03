@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/auth")
@@ -40,7 +41,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não encontrado");
         }
 
-        Long userId = null;
+        UUID userId = null;
         UserRole role = null;
         if (userDetails instanceof User) {
             userId = ((User) userDetails).getId();

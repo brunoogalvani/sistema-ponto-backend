@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface FolhaPontoRepository extends JpaRepository<FolhaPonto, Long> {
-    Optional<FolhaPonto> findByUserIdAndDia(Long userId, String dia);
+public interface FolhaPontoRepository extends JpaRepository<FolhaPonto, UUID> {
+    Optional<FolhaPonto> findByUserIdAndDia(UUID userId, String dia);
 
-    List<FolhaPonto> findByUserId(Long userId);
+    List<FolhaPonto> findByUserId(UUID userId);
 }
