@@ -29,18 +29,18 @@ public class FolhaPontoController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<List<FolhaPontoDTO>> getPontoById(@PathVariable UUID userId) {
-        List<FolhaPonto> pontos = folhaPontoRepository.findByUserId(userId);
+        List<FolhaPontoDTO> pontos = folhaPontoService.findByUserId(userId);
 
         if (pontos.isEmpty()) {
             throw new RuntimeException("Nenhum registro de ponto deste usuário foi encontrado");
         }
 
-        List<FolhaPontoDTO> dtos = pontos.stream().map(FolhaPontoDTO::new).toList();
-        return ResponseEntity.ok(dtos);
+        return ResponseEntity.ok(pontos);
     }
 
     @GetMapping("/{userId}/{dia}")
-    public FolhaPonto getPontoByDay(@PathVariable UUID userId, @PathVariable String dia){
-        return folhaPontoRepository.findByUserIdAndDia(userId, dia).orElseThrow(() -> new RuntimeException("Folha Ponto não Encontrada neste dia"));
+    public ResponseEntity<FolhaPontoDTO> getPontoByDay(@PathVariable UUID userId, @PathVariable String dia){
+        FolhaPontoDTO folhaPonto = folhaPontoService.findByUserIdAndDia(userId, dia);
+        return ResponseEntity.ok(folhaPonto);
     }
 }

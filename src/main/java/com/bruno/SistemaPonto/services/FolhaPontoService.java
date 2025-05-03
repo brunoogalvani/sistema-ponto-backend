@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -55,5 +56,17 @@ public class FolhaPontoService {
         folhaPontoRepository.save(registro);
 
         return new FolhaPontoDTO(registro);
+    }
+
+    public FolhaPontoDTO findByUserIdAndDia(UUID userId, String dia) {
+        FolhaPonto folhaPonto = folhaPontoRepository.findByUserIdAndDia(userId, dia).orElseThrow(() -> new RuntimeException("Folha ponto não encontrada"));
+        return new FolhaPontoDTO(folhaPonto);
+    }
+
+    public List<FolhaPontoDTO> findByUserId(UUID userId) {
+        List<FolhaPonto> result = folhaPontoRepository.findByUserId(userId);
+        return result.stream()
+                .map(FolhaPontoDTO::new)
+                .toList();
     }
 }

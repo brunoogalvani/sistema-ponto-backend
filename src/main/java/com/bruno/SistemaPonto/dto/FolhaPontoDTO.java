@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class FolhaPontoDTO {
 
-    private Long id;
+    private UUID id;
     private UUID userId;
     private String dia;
     private String entradaManha;
@@ -26,11 +26,11 @@ public class FolhaPontoDTO {
         this.userId = entity.getUser().getId();
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
