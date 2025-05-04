@@ -69,4 +69,28 @@ public class FolhaPontoService {
                 .map(FolhaPontoDTO::new)
                 .toList();
     }
+
+    public FolhaPontoDTO updatePonto(UUID userId, String dia, FolhaPontoDTO novoPonto) {
+        FolhaPonto pontoExistente = folhaPontoRepository.findByUserIdAndDia(userId, dia).orElseThrow(() -> new RuntimeException("Folha ponto não encontrada"));
+
+        if (novoPonto.getEntradaManha() != null) {
+            pontoExistente.setEntradaManha(novoPonto.getEntradaManha());
+        }
+
+        if (novoPonto.getSaidaManha() != null) {
+            pontoExistente.setSaidaManha(novoPonto.getSaidaManha());
+        }
+
+        if (novoPonto.getEntradaTarde() != null) {
+            pontoExistente.setEntradaTarde(novoPonto.getEntradaTarde());
+        }
+
+        if (novoPonto.getSaidaTarde() != null) {
+            pontoExistente.setSaidaTarde(novoPonto.getSaidaTarde());
+        }
+
+        folhaPontoRepository.save(pontoExistente);
+
+        return new FolhaPontoDTO(pontoExistente);
+    }
 }

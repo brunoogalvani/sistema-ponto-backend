@@ -38,4 +38,11 @@ public class SolicitacaoController {
         SolicitacaoDTO solicitacaoDTO = solicitacaoService.criarSolicitacao(data);
         return ResponseEntity.status(HttpStatus.CREATED).body(solicitacaoDTO);
     }
+
+    @PutMapping
+    public ResponseEntity<SolicitacaoDTO> processarSolicitacao(@PathVariable UUID solicitacaoId, @PathVariable UUID userAdminId, @RequestParam boolean aprovada) {
+        SolicitacaoDTO solicitacaoDTO = solicitacaoService.processarSolicitacao(solicitacaoId, userAdminId, aprovada);
+
+        return ResponseEntity.ok(solicitacaoDTO);
+    }
 }

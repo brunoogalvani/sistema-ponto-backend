@@ -1,12 +1,15 @@
 package com.bruno.SistemaPonto.services;
 
+import com.bruno.SistemaPonto.dto.FolhaPontoDTO;
 import com.bruno.SistemaPonto.dto.SolicitacaoDTO;
 import com.bruno.SistemaPonto.entities.FolhaPonto;
 import com.bruno.SistemaPonto.entities.Solicitacao;
+import com.bruno.SistemaPonto.entities.StatusSolicitacao;
 import com.bruno.SistemaPonto.entities.User;
 import com.bruno.SistemaPonto.repositories.FolhaPontoRepository;
 import com.bruno.SistemaPonto.repositories.SolicitacaoRepository;
 import com.bruno.SistemaPonto.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,9 @@ public class SolicitacaoService {
 
     @Autowired
     private FolhaPontoRepository folhaPontoRepository;
+
+    @Autowired
+    private FolhaPontoService folhaPontoService;
 
     @Autowired
     private UserRepository userRepository;
@@ -65,6 +71,32 @@ public class SolicitacaoService {
 
         solicitacao = solicitacaoRepository.save(solicitacao);
 
+        return new SolicitacaoDTO(solicitacao);
+    }
+
+    @Transactional
+    public SolicitacaoDTO processarSolicitacao(UUID solicitacaoId, UUID userAdminId, boolean aprovada) {
+        Solicitacao solicitacao = solicitacaoRepository.findById(solicitacaoId).orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
+
+        if (!solicitacao.getStatus().equals(StatusSolicitacao.PENDENTE)) {
+            throw new RuntimeException("Solicitação já foi processada");
+        }
+
+        User userAdmin = userRepository.findById(userAdminId).orElseThrow(() -> new RuntimeException("Admin não encontrado"));
+        solicitacao.setUserAdmin(userAdmin);
+        solicitacao.setStatus(aprovada ? StatusSolicitacao.APROVADA : StatusSolicitacao.REJEITADA);
+
+        if (aprovada) {
+            FolhaPontoDTO novoPonto = new FolhaPontoDTO();
+            if (solicitacao.getEntradaManhaNovo() != null) novoPonto.setEntradaManha(solicitacao.getEntradaManhaNovo());
+            if (solicitacao.getSaidaManhaNovo() != null) novoPonto.setSaidaManha(solicitacao.getSaidaManhaNovo());
+            if (solicitacao.getEntradaTardeNovo() != null) novoPonto.setEntradaTarde(solicitacao.getEntradaTardeNovo());
+            if (solicitacao.getSaidaTardeNovo() != null) novoPonto.setSaidaTarde(solicitacao.getSaidaTardeNovo());
+
+            folhaPontoService.updatePonto(solicitacao.getUser().getId(), solicitacao.getDiaPontoOriginal(), novoPonto);
+        }
+
+        solicitacaoRepository.save(solicitacao);
         return new SolicitacaoDTO(solicitacao);
     }
 }
