@@ -35,34 +35,18 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity getUserById(@PathVariable UUID id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        UserDTO user = userService.findById(id);
+        return ResponseEntity.ok(user);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateUser(@PathVariable UUID id, @RequestBody EditUserDTO dto) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isEmpty()) return ResponseEntity.notFound().build();
-
-        User user = optionalUser.get();
-
-        if (dto.getName() != null && !dto.getName().isBlank()) {
-            user.setName(dto.getName());
+        try {
+            userService.updateUser(id, dto);
+            return ResponseEntity.ok("Usuário atualizado com sucesso");
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
-
-        if (dto.getEmail() != null && !dto.getEmail().isBlank()) {
-            user.setEmail(dto.getEmail());
-        }
-
-        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-            String encryptedPassword = new BCryptPasswordEncoder().encode(dto.getPassword());
-            user.setPassword(encryptedPassword);
-        }
-
-        userRepository.save(user);
-
-        return ResponseEntity.ok("Usuário atualizado com sucesso");
     }
 
     @DeleteMapping("/{id}")
@@ -78,12 +62,11 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
-        if (this.userRepository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
-
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.name(), data.email(), encryptedPassword, data.role());
-
-        this.userRepository.save(newUser);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        try {
+            userService.registerUser(data);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
