@@ -10,6 +10,7 @@ public class SolicitacaoDTO {
 
     private UUID id;
     private UUID userId;
+    private String userName;
     private UUID pontoId;
     private String diaPontoOriginal;
     private String entradaManhaOriginal;
@@ -24,6 +25,7 @@ public class SolicitacaoDTO {
     private StatusSolicitacao status;
     private String diaCriacao;
     private UUID userAdminId;
+    private String userAdminName;
 
     public SolicitacaoDTO() {
     }
@@ -31,8 +33,10 @@ public class SolicitacaoDTO {
     public SolicitacaoDTO(Solicitacao entity) {
         BeanUtils.copyProperties(entity, this);
         this.userId = entity.getUser().getId();
+        this.userName = entity.getUser().getName();
         this.pontoId = entity.getPonto().getId();
         this.userAdminId = entity.getUserAdmin() != null ? entity.getUserAdmin().getId() : null;
+        this.userAdminName = entity.getUserAdmin() != null ? entity.getUserAdmin().getName() : null;
     }
 
     public UUID getId() {
@@ -49,6 +53,14 @@ public class SolicitacaoDTO {
 
     public void setUserId(UUID userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public UUID getPontoId() {
@@ -161,5 +173,13 @@ public class SolicitacaoDTO {
 
     public void setUserAdminId(UUID userAdminId) {
         this.userAdminId = userAdminId;
+    }
+
+    public String getUserAdminName() {
+        return userAdminName;
+    }
+
+    public void setUserAdminName(String userAdminName) {
+        this.userAdminName = userAdminName;
     }
 }
