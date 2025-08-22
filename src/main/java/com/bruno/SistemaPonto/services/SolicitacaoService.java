@@ -2,10 +2,7 @@ package com.bruno.SistemaPonto.services;
 
 import com.bruno.SistemaPonto.dto.FolhaPontoDTO;
 import com.bruno.SistemaPonto.dto.SolicitacaoDTO;
-import com.bruno.SistemaPonto.entities.FolhaPonto;
-import com.bruno.SistemaPonto.entities.Solicitacao;
-import com.bruno.SistemaPonto.entities.StatusSolicitacao;
-import com.bruno.SistemaPonto.entities.User;
+import com.bruno.SistemaPonto.entities.*;
 import com.bruno.SistemaPonto.repositories.FolhaPontoRepository;
 import com.bruno.SistemaPonto.repositories.SolicitacaoRepository;
 import com.bruno.SistemaPonto.repositories.UserRepository;
@@ -83,6 +80,9 @@ public class SolicitacaoService {
         }
 
         User userAdmin = userRepository.findById(userAdminId).orElseThrow(() -> new RuntimeException("Admin não encontrado"));
+        if (!userAdmin.getRole().equals(UserRole.ADMIN)) {
+            throw new RuntimeException("Usuário não tem permissão para processar solicitações");
+        }
         solicitacao.setUserAdmin(userAdmin);
         solicitacao.setStatus(aprovada ? StatusSolicitacao.APROVADA : StatusSolicitacao.REJEITADA);
 

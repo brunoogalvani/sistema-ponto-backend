@@ -39,7 +39,7 @@ public class SolicitacaoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(solicitacaoDTO);
     }
 
-    @PutMapping
+    @PutMapping("/{solicitacaoId}/processar/{userAdminId}")
     public ResponseEntity<SolicitacaoDTO> processarSolicitacao(@PathVariable UUID solicitacaoId, @PathVariable UUID userAdminId, @RequestParam boolean aprovada) {
         SolicitacaoDTO solicitacaoDTO = solicitacaoService.processarSolicitacao(solicitacaoId, userAdminId, aprovada);
 
