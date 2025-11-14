@@ -1,10 +1,14 @@
 package com.bruno.SistemaPonto.dto;
 
 import com.bruno.SistemaPonto.entities.FolhaPonto;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
 public class FolhaPontoDTO {
 
     private UUID id;
@@ -16,73 +20,10 @@ public class FolhaPontoDTO {
     private String saidaTarde;
     private String totalHoras;
 
-    public FolhaPontoDTO() {
-    }
-
     public FolhaPontoDTO(FolhaPonto entity){
         entity.atualizarTotalHoras();
         BeanUtils.copyProperties(entity, this);
         this.totalHoras = entity.getTotalHoras();
         this.userId = entity.getUser().getId();
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public String getDia() {
-        return dia;
-    }
-
-    public void setDia(String dia) {
-        this.dia = dia;
-    }
-
-    public String getEntradaManha() {
-        return entradaManha;
-    }
-
-    public void setEntradaManha(String entradaManha) {
-        this.entradaManha = entradaManha;
-    }
-
-    public String getSaidaManha() {
-        return saidaManha;
-    }
-
-    public void setSaidaManha(String saidaManha) {
-        this.saidaManha = saidaManha;
-    }
-
-    public String getEntradaTarde() {
-        return entradaTarde;
-    }
-
-    public void setEntradaTarde(String entradaTarde) {
-        this.entradaTarde = entradaTarde;
-    }
-
-    public String getSaidaTarde() {
-        return saidaTarde;
-    }
-
-    public void setSaidaTarde(String saidaTarde) {
-        this.saidaTarde = saidaTarde;
-    }
-
-    public String getTotalHoras() {
-        return totalHoras;
     }
 }

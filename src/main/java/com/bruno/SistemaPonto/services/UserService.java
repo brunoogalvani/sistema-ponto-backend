@@ -27,9 +27,9 @@ public class UserService {
                 .toList();
     }
 
-    public UserDTO findById(UUID id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        return new UserDTO(user);
+    public Optional<UserDTO> findById(UUID id) {
+        return userRepository.findById(id)
+                .map(UserDTO::new);
     }
 
     public void registerUser(RegisterDTO data) {

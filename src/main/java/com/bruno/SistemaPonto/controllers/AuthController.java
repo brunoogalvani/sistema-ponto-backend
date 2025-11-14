@@ -4,6 +4,10 @@ import com.bruno.SistemaPonto.dto.AuthDTO;
 import com.bruno.SistemaPonto.entities.User;
 import com.bruno.SistemaPonto.entities.UserRole;
 import com.bruno.SistemaPonto.repositories.UserRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +23,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/auth")
+@Tag(name = "Autenticação")
 public class AuthController {
 
     @Autowired
@@ -27,33 +32,43 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
+    @Operation(
+        summary = "Realiza a autenticação do usuário",
+        responses = {
+                @ApiResponse(responseCode = "200", description = "Autenticação realizada com sucesso", content = @Content),
+                @ApiResponse(responseCode = "401", description = "Credenciais inválidas", content = @Content),
+                @ApiResponse(responseCode = "500", description = "Erro no servidor", content = @Content)
+        }
+    )
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthDTO data) {
 
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-        var auth = authenticationManager.authenticate(usernamePassword);
+        try {
+            var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
+            var auth = authenticationManager.authenticate(usernamePassword);
 
-        String email = auth.getName();
+            String email = auth.getName();
 
-        UserDetails userDetails = userRepository.findByEmail(email);
+            UserDetails userDetails = userRepository.findByEmail(email);
 
-        if (userDetails == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não encontrado");
+            if (userDetails == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos");
+            }
+
+            UUID userId = null;
+            UserRole role = null;
+            if (userDetails instanceof User) {
+                userId = ((User) userDetails).getId();
+                role = ((User) userDetails).getRole();
+            }
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", userId);
+            response.put("role", role);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos");
         }
-
-        UUID userId = null;
-        UserRole role = null;
-        if (userDetails instanceof User) {
-            userId = ((User) userDetails).getId();
-            role = ((User) userDetails).getRole();
-        }
-
-        if (userId == null) return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ID do usuário não encontrado");
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", userId);
-        response.put("role", role);
-
-        return ResponseEntity.ok(response);
     }
 }
