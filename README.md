@@ -18,13 +18,21 @@ Essa API foi desenvolvida como projeto pessoal para estudar a linguagem **Java**
 
 ## Como executar o projeto
 
-1. Suba os containers:
+1. Gere o .jar:
+
+```sh
+mvn clean package
+```
+
+Isso criará o arquivo: target/(nome-do-app).jar
+
+2. Suba os containers:
 
 ```sh
 docker-compose up -d
 ```
 
-2. Para derrubar os containers:
+3. Para derrubar os containers:
 
 ```sh
 docker-compose down
