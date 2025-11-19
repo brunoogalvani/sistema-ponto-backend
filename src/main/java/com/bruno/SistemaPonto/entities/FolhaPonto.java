@@ -1,8 +1,6 @@
 package com.bruno.SistemaPonto.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -10,8 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.UUID;
 
-@Data
-@NoArgsConstructor
 @Entity
 @Table(name = "tb_pontos")
 public class FolhaPonto {
@@ -30,6 +26,9 @@ public class FolhaPonto {
     private String entradaTarde;
     private String saidaTarde;
     private String totalHoras;
+
+    public FolhaPonto() {
+    }
 
     public FolhaPonto(UUID id, String dia, String entradaManha, String saidaManha, String entradaTarde, String saidaTarde) {
         this.id = id;

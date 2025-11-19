@@ -2,14 +2,10 @@ package com.bruno.SistemaPonto.dto;
 
 import com.bruno.SistemaPonto.entities.Solicitacao;
 import com.bruno.SistemaPonto.entities.StatusSolicitacao;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.util.UUID;
 
-@Data
-@NoArgsConstructor
 public class SolicitacaoDTO {
 
     private UUID id;
@@ -31,6 +27,9 @@ public class SolicitacaoDTO {
     private UUID userAdminId;
     private String userAdminName;
 
+    public SolicitacaoDTO() {
+    }
+
     public SolicitacaoDTO(Solicitacao entity) {
         BeanUtils.copyProperties(entity, this);
         this.userId = entity.getUser().getId();
@@ -38,5 +37,149 @@ public class SolicitacaoDTO {
         this.pontoId = entity.getPonto().getId();
         this.userAdminId = entity.getUserAdmin() != null ? entity.getUserAdmin().getId() : null;
         this.userAdminName = entity.getUserAdmin() != null ? entity.getUserAdmin().getName() : null;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public UUID getPontoId() {
+        return pontoId;
+    }
+
+    public void setPontoId(UUID pontoId) {
+        this.pontoId = pontoId;
+    }
+
+    public String getDiaPontoOriginal() {
+        return diaPontoOriginal;
+    }
+
+    public void setDiaPontoOriginal(String diaPontoOriginal) {
+        this.diaPontoOriginal = diaPontoOriginal;
+    }
+
+    public String getEntradaManhaOriginal() {
+        return entradaManhaOriginal;
+    }
+
+    public void setEntradaManhaOriginal(String entradaManhaOriginal) {
+        this.entradaManhaOriginal = entradaManhaOriginal;
+    }
+
+    public String getSaidaManhaOriginal() {
+        return saidaManhaOriginal;
+    }
+
+    public void setSaidaManhaOriginal(String saidaManhaOriginal) {
+        this.saidaManhaOriginal = saidaManhaOriginal;
+    }
+
+    public String getEntradaTardeOriginal() {
+        return entradaTardeOriginal;
+    }
+
+    public void setEntradaTardeOriginal(String entradaTardeOriginal) {
+        this.entradaTardeOriginal = entradaTardeOriginal;
+    }
+
+    public String getSaidaTardeOriginal() {
+        return saidaTardeOriginal;
+    }
+
+    public void setSaidaTardeOriginal(String saidaTardeOriginal) {
+        this.saidaTardeOriginal = saidaTardeOriginal;
+    }
+
+    public String getEntradaManhaNovo() {
+        return entradaManhaNovo;
+    }
+
+    public void setEntradaManhaNovo(String entradaManhaNovo) {
+        this.entradaManhaNovo = entradaManhaNovo;
+    }
+
+    public String getSaidaManhaNovo() {
+        return saidaManhaNovo;
+    }
+
+    public void setSaidaManhaNovo(String saidaManhaNovo) {
+        this.saidaManhaNovo = saidaManhaNovo;
+    }
+
+    public String getEntradaTardeNovo() {
+        return entradaTardeNovo;
+    }
+
+    public void setEntradaTardeNovo(String entradaTardeNovo) {
+        this.entradaTardeNovo = entradaTardeNovo;
+    }
+
+    public String getSaidaTardeNovo() {
+        return saidaTardeNovo;
+    }
+
+    public void setSaidaTardeNovo(String saidaTardeNovo) {
+        this.saidaTardeNovo = saidaTardeNovo;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    public StatusSolicitacao getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusSolicitacao status) {
+        this.status = status;
+    }
+
+    public String getDiaCriacao() {
+        return diaCriacao;
+    }
+
+    public void setDiaCriacao(String diaCriacao) {
+        this.diaCriacao = diaCriacao;
+    }
+
+    public UUID getUserAdminId() {
+        return userAdminId;
+    }
+
+    public void setUserAdminId(UUID userAdminId) {
+        this.userAdminId = userAdminId;
+    }
+
+    public String getUserAdminName() {
+        return userAdminName;
+    }
+
+    public void setUserAdminName(String userAdminName) {
+        this.userAdminName = userAdminName;
     }
 }

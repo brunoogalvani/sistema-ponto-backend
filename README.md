@@ -16,28 +16,43 @@ Essa API foi desenvolvida como projeto pessoal para estudar a linguagem **Java**
 - Listar e processar solicitações
 - Visualização de administrador do sistema
 
+## Requisitos para executar
+
+Ter instalado:
+- Java 21 ou superior
+- Maven
+- Docker
+
+Possuir o plugin
+
 ## Como executar o projeto
 
 1. Gere o .jar:
 
 ```sh
-mvn clean package
+mvn clean package -DskipTests
 ```
 
 Isso criará o arquivo: target/(nome-do-app).jar
 
-2. Suba os containers:
+2. Crie o volume do banco de dados
+
+```sh
+docker volume create sistemaponto_pgdata
+```
+
+3. Suba os containers:
 
 ```sh
 docker-compose up -d
 ```
 
-3. Para derrubar os containers:
+4. Para derrubar os containers:
 
 ```sh
 docker-compose down
 ```
 
-A API estará disponível em http://localhost:8080. Para acessar a documentação da API, acesse http://localhost:8080/api-docs.
+A API estará disponível em http://localhost:8080. Para acessar a documentação da API, acesse http://localhost:8080/swagger-ui/index.html.
 
 O frontend está disponível no repositório: https://github.com/brunoogalvani/sistema-ponto-frontend
