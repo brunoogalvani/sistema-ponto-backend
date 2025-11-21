@@ -23,8 +23,6 @@ Ter instalado:
 - Maven
 - Docker
 
-Possuir o plugin
-
 ## Como executar o projeto
 
 1. Gere o .jar:
@@ -52,6 +50,10 @@ docker-compose up -d
 ```sh
 docker-compose down
 ```
+
+No primeiro build da API, o banco é gerado apenas com o usuário Administrador, suas credenciais são:
+- login: admin@sistema.com
+- senha: admin
 
 A API estará disponível em http://localhost:8080. Para acessar a documentação da API, acesse http://localhost:8080/swagger-ui/index.html.
 
