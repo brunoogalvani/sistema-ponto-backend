@@ -33,19 +33,13 @@ mvn clean package -DskipTests
 
 Isso criará o arquivo: target/(nome-do-app).jar
 
-2. Crie o volume do banco de dados
-
-```sh
-docker volume create sistemaponto_pgdata
-```
-
-3. Suba os containers:
+2. Suba os containers:
 
 ```sh
 docker-compose up -d
 ```
 
-4. Para derrubar os containers:
+3. Para derrubar os containers:
 
 ```sh
 docker-compose down
